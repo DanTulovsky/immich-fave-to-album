@@ -44,6 +44,14 @@ A Go script that automatically adds all your favorite photos and videos from Imm
    docker pull mrwetsnow/immich-tools:202509231205
    ```
 
+2. (Optional) Use the convenient run script:
+   ```bash
+   # Clone this repository and use the provided script
+   git clone <repository-url>
+   cd immich-fave-to-album
+   ./scripts/run.sh
+   ```
+
 ## Usage
 
 ### Set Environment Variable
@@ -156,6 +164,31 @@ docker run --rm --env-file .env mrwetsnow/immich-tools:202509231205 \
 ```
 
 > **Tip**: Using `--env-file .env` is recommended when you have multiple environment variables or want to keep your configuration organized. Just make sure your `.env` file is in your `.gitignore` to avoid committing sensitive API keys!
+
+#### Quick Start Script
+
+For convenience, you can use the provided `run.sh` script which includes smart defaults and error checking:
+
+```bash
+# Make sure you're in the project directory
+cd /path/to/immich-fave-to-album
+
+# Run with default settings
+./scripts/run.sh
+
+# Override settings with environment variables
+export IMMICH_SERVER="https://my-server.com"
+export IMMICH_ALBUM="My Custom Album"
+export IMMICH_DRY_RUN="true"
+export IMMICH_VERBOSE="true"
+./scripts/run.sh
+```
+
+The script automatically:
+- ✅ Detects and uses your `.env` file
+- ✅ Provides helpful error messages
+- ✅ Shows what it's doing before execution
+- ✅ Allows easy customization via environment variables
 
 #### Building from Source with Docker
 
@@ -315,6 +348,8 @@ immich-fave-to-album/
 ├── immich/              # Immich API client package
 │   ├── client.go        # API client implementation
 │   └── types.go         # Data structures and types
+├── scripts/             # Utility scripts
+│   └── run.sh          # Convenient Docker runner script
 ├── Dockerfile          # Multi-platform Docker image definition
 ├── .dockerignore       # Docker build context exclusions
 ├── Taskfile.yml        # Build automation (Task runner)
