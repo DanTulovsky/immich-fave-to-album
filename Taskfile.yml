@@ -54,3 +54,28 @@ tasks:
     deps: [build, check]
     cmds:
       - echo "Ready for development! Use 'task run ARGS=\"your args\"' to run"
+
+  # Release - build and push multi-platform Docker image
+  release:
+    desc: "Build and push multi-platform Docker image (amd64/arm64) to mrwetsnow/immich-tools with date and latest tags"
+    cmds:
+      - |
+        # Generate date-based tag (YYYYMMDDHHMM format for multiple releases per day)
+        DATE_TAG=$(date +%Y%m%d%H%M)
+        IMAGE_NAME=mrwetsnow/immich-tools
+        echo "🏗️  Building multi-platform Docker image with tag: ${DATE_TAG}"
+        echo "🏗️  Image will also be tagged as: latest"
+        echo "🏗️  Building for platforms: linux/amd64, linux/arm64"
+
+        # Build and push multi-platform Docker image using buildx
+        docker buildx build \
+          --platform linux/amd64,linux/arm64 \
+          --tag ${IMAGE_NAME}:${DATE_TAG} \
+          --tag ${IMAGE_NAME}:latest \
+          --push \
+          .
+
+        echo "✅ Release completed successfully!"
+        echo "📅 Date tag: ${DATE_TAG}"
+        echo "🔗 Repository: https://hub.docker.com/r/${IMAGE_NAME}"
+        echo "📦 Multi-platform image supports both AMD64 and ARM64 architectures"

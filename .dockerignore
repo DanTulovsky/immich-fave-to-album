@@ -1,0 +1,33 @@
+# Git
+.git
+.gitignore
+
+# Task runner
+Taskfile.yml
+
+# Documentation
+README.md
+
+# Build artifacts
+immich-fave-to-album
+
+# IDE files
+.vscode
+.idea
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Docker files
+Dockerfile
+.dockerignore
+
+# Test files
+*_test.go
+
+# Temporary files
+*.tmp
+*.log
+
+.env
