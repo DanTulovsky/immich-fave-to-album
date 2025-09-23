@@ -29,7 +29,7 @@ if [ "$VERBOSE" = "true" ]; then
 fi
 
 # Build the final command
-DOCKER_CMD="$DOCKER_CMD mrwetsnow/immich-tools:$IMAGE_TAG -server $SERVER_URL -album \"$ALBUM_NAME\""
+DOCKER_CMD="$DOCKER_CMD mrwetsnow/immich-tools:$IMAGE_TAG -server $SERVER_URL -album $ALBUM_NAME"
 
 # Add no-dry-run flag if not in dry run mode
 if [ "$DRY_RUN" != "true" ]; then
