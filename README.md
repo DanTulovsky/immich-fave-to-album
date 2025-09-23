@@ -1,5 +1,7 @@
 # Immich Favorites to Album
 
+**(Obviously vibe coded, use caution.)**
+
 A Go script that automatically adds all your favorite photos and videos from Immich to a specified album.
 
 ## Features
