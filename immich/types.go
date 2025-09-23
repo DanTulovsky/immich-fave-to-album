@@ -52,6 +52,18 @@ type SearchMetadataRequest struct {
 	Size       int    `json:"size,omitempty"`
 }
 
+// User represents a user in the system
+type User struct {
+	ID                string `json:"id"`
+	Email             string `json:"email"`
+	Name              string `json:"name"`
+	AvatarColor       string `json:"avatarColor"`
+	ProfileImagePath  string `json:"profileImagePath"`
+	IsAdmin           bool   `json:"isAdmin"`
+	ShouldChangePassword bool `json:"shouldChangePassword"`
+	ProfileChangedAt  string `json:"profileChangedAt"`
+}
+
 // SearchMetadataResponse represents the response from a search metadata request
 type SearchMetadataResponse struct {
 	Albums AssetsContainer `json:"albums"`

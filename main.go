@@ -1,3 +1,4 @@
+// Package main ...
 package main
 
 import (
@@ -24,10 +25,13 @@ func main() {
 
 	if config.Verbose {
 		fmt.Printf("Verbose mode enabled\n")
-		fmt.Printf("Debug mode enabled\n")
 		fmt.Printf("Dry run mode: %t\n", config.DryRun)
 		fmt.Printf("Connecting to Immich server: %s\n", config.ServerURL)
 		fmt.Printf("Album name: %s\n", config.AlbumName)
+	}
+
+	if config.Debug {
+		fmt.Printf("Debug mode enabled\n")
 	}
 
 	// Create Immich client
@@ -40,9 +44,7 @@ func main() {
 	}
 
 	if len(assets) == 0 {
-		if config.Verbose {
-			fmt.Println("No favorite assets found")
-		}
+		fmt.Println("No favorite assets found")
 		return
 	}
 
@@ -67,14 +69,15 @@ func main() {
 			for _, asset := range assets {
 				fmt.Printf("[DRY RUN] Would add asset: %s (type: %s, favorite: %t)\n", asset.ID, asset.Type, asset.IsFavorite)
 			}
+			// Always show final status for dry run
+			fmt.Printf("✓ Dry run completed - would add %d assets to album '%s'\n", len(assets), album.AlbumName)
 		} else {
 			err = client.AddAssetsToAlbum(album.ID, assets)
 			if err != nil {
 				log.Fatalf("Failed to add assets to album: %v", err)
 			}
-			if config.Verbose {
-				fmt.Printf("Successfully added %d assets to album\n", len(assets))
-			}
+			// Always show final success status
+			fmt.Printf("✓ Successfully added %d assets to album '%s'\n", len(assets), album.AlbumName)
 		}
 	}
 }

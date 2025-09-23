@@ -58,8 +58,10 @@ func (c *Client) GetFavoriteAssets() ([]Asset, error) {
 		return nil, fmt.Errorf("failed to parse search response: %v", err)
 	}
 
-	if c.config.Verbose {
-		fmt.Printf("Found %d favorite assets\n", len(searchResp.Assets.Items))
+	if c.config.Debug {
+		fmt.Printf("[DEBUG] Successfully parsed response\n")
+		fmt.Printf("[DEBUG] Assets container: total=%d, count=%d, items=%d\n",
+			searchResp.Assets.Total, searchResp.Assets.Count, len(searchResp.Assets.Items))
 	}
 
 	return searchResp.Assets.Items, nil
@@ -106,12 +108,8 @@ func (c *Client) CreateOrGetAlbum(assets []Asset) (*Album, error) {
 		AlbumName:   c.config.AlbumName,
 		AssetIDs:    assetIDs,
 		Description: fmt.Sprintf("Album created by immich-fave-to-album script on %s", time.Now().Format("2006-01-02 15:04:05")),
-		AlbumUsers: []AlbumUser{
-			{
-				UserID: "me", // This might need to be the actual user ID
-				Role:   "editor",
-			},
-		},
+		// Don't include albumUsers - the creator automatically becomes the owner
+		AlbumUsers: []AlbumUser{},
 	}
 
 	if c.config.Verbose {
@@ -292,9 +290,7 @@ func (c *Client) parseJSONResponse(body io.Reader, target interface{}) error {
 	}
 
 	if c.config.Debug {
-		fmt.Printf("[DEBUG] Raw Response Body:\n%s\n", string(responseBody))
-		fmt.Printf("[DEBUG] ====================\n")
-		fmt.Printf("[DEBUG] Pretty-printed Response:\n")
+		fmt.Printf("[DEBUG] Response Body (Pretty-printed):\n")
 
 		// Try to pretty print the response for better readability
 		var prettyJSON interface{}
