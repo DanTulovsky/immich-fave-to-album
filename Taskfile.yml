@@ -1,0 +1,56 @@
+version: '3'
+
+tasks:
+  # Build the application
+  build:
+    desc: "Build the application"
+    cmds:
+      - go build -o immich-fave-to-album
+
+  # Run the application
+  run:
+    desc: "Run the application"
+    cmds:
+      - go run main.go {{.CLI_ARGS}}
+
+  # Test the application
+  test:
+    desc: "Run tests"
+    cmds:
+      - go test ./...
+
+  # Clean build artifacts
+  clean:
+    desc: "Clean build artifacts"
+    cmds:
+      - rm -f immich-fave-to-album
+
+  # Run go vet to check for issues
+  vet:
+    desc: "Run go vet to check for issues"
+    cmds:
+      - go vet ./...
+
+  # Format the code
+  fmt:
+    desc: "Format the code"
+    cmds:
+      - go fmt ./...
+
+  # Run all quality checks
+  check:
+    desc: "Run all quality checks"
+    deps: [vet, fmt, test]
+
+  # Show help
+  help:
+    desc: "Show this help message"
+    cmds:
+      - task --list
+
+  # Development workflow
+  dev:
+    desc: "Development workflow - build, check, and run"
+    deps: [build, check]
+    cmds:
+      - echo "Ready for development! Use 'task run ARGS=\"your args\"' to run"
