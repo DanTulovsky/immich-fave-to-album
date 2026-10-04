@@ -16,8 +16,8 @@ VERBOSE="${IMMICH_VERBOSE:-false}"
 DOCKER_CMD="docker run --rm"
 
 # Add environment file if it exists
-if [ -f ".env" ]; then
-    DOCKER_CMD="$DOCKER_CMD --env-file .env"
+if [ -f "/home/dant/src/immich-fave-to-album/.env" ]; then
+    DOCKER_CMD="$DOCKER_CMD --env-file /home/dant/src/immich-fave-to-album/.env"
 else
     echo "Warning: .env file not found. Make sure IMMICH_API_KEY is set in your environment."
     echo "You can create a .env file with: echo 'IMMICH_API_KEY=your-key-here' > .env"
